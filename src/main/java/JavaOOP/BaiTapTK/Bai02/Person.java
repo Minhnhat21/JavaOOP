@@ -75,7 +75,10 @@ public class Person implements Cloneable, Comparable<Person>, Serializable{
     }
     @Override
     public int compareTo(Person o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.getName().equals(o.name)) {
+            return 0;
+        }
+        return 1;
     }
 
     @Override
