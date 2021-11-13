@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -26,20 +28,21 @@ public class StudentManagement {
 		
         try {   
             FileOutputStream f = new FileOutputStream("D:\\Code\\Java\\JavaOOP\\JavaOOP\\src\\main\\java\\JavaOOP\\BaiTapTK\\Bai02\\Sinhvien.txt");   // tao file f tro den sinhvien.txt
-            ObjectOutputStream oStream = new ObjectOutputStream(f); // dung de ghi theo Object vao file f
-            oStream.writeObject(studentlist);   // ghi student theo kieu Object vao file
+            ObjectOutputStream oStream = new ObjectOutputStream(f); 
+            oStream.writeObject(studentlist);   
             oStream.close();
         } catch (IOException e) {
             System.out.println("Error Write file");
         }
     
     }
-    public ArrayList<Student> readFile() {
+    @SuppressWarnings("unchecked")
+	public ArrayList<Student> readFile() {
         ArrayList<Student> student = null;
         try {   
             FileInputStream f = new FileInputStream("D:\\Code\\Java\\JavaOOP\\JavaOOP\\src\\main\\java\\JavaOOP\\BaiTapTK\\Bai02\\Sinhvien.txt"); // tao file f tro den sinhvien.txt
-            ObjectInputStream inStream = new ObjectInputStream(f);  // dung de doc theo Object vao file f
-            // dung inStream doc theo Object, ep kieu tra ve la Student
+            ObjectInputStream inStream = new ObjectInputStream(f);  
+    
             student = (ArrayList<Student>) inStream.readObject();
             inStream.close();
         } catch (ClassNotFoundException e) {
@@ -67,21 +70,25 @@ public class StudentManagement {
         }
     }
     
-    public static void swap_Student(Student s1, Student s2) throws CloneNotSupportedException {
-        Student temp = (Student) s1.clone();
-        s1 = (Student) s2.clone();
-        s2 = (Student) temp.clone();
-    }
-    public static void sort_Student(ArrayList<Student> list) throws CloneNotSupportedException {
-        for (int i = 0; i < list.size() - 1; i++) {
-            for (int j = 0; j < list.size(); j++) {
-                if(list.get(i).compareTo(list.get(j)) == 1 ) {
-                    swap_Student(list.get(i), list.get(j));
-                }            
-            }
-            
-        }
-    }
+//    public static void swap_Student(Student s1, Student s2) throws CloneNotSupportedException {
+//        Student temp = (Student) s1.clone();
+//        s1 = (Student) s2.clone();
+//        s2 = temp;
+//    }
+//    
+//    public static void sort_Student(ArrayList<Student> list) throws CloneNotSupportedException {
+//        for (int i = 0; i < list.size() - 1; i++) {
+//            for (int j = 0; j < list.size(); j++) {
+//                if(list.get(i).compareTo(list.get(j)) == 1 ) {
+//                    swap_Student(list.get(i), list.get(j));
+//                }            
+//            }
+//            
+//        }
+//    }
+    
+
+    // Ham Main
     
     public static void main(String[] args) throws CloneNotSupportedException {
         StudentManagement studentlist = new StudentManagement();
@@ -93,20 +100,18 @@ public class StudentManagement {
         //HienThi(studentlist.students);
         
         //Săp xếp sinh vien theo thanh tich
-        sort_Student(studentlist.students);
+        Collections.sort(studentlist.students);
         
-        //Write
+        //Write File
         
         studentlist.writeFile(studentlist.students);
-        
+      
         //Doc file
-        
         
         ArrayList<Student> resultFile = studentlist.readFile();
         
         //Hien thi danh sach da doc
         HienThi(resultFile);
-        
         
         
     }

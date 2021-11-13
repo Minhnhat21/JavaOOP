@@ -5,13 +5,14 @@
  */
 package JavaOOP.BaiTapTK.Bai02;
 
+import java.util.Comparator;
 import java.util.Scanner;
 
 /**
  *
  * @author nguye
  */
-public class Student extends Person{
+public class Student extends Person {
     private String studentID;
     private int academic_year;
     private float gpa;
@@ -62,7 +63,8 @@ public class Student extends Person{
     
     @Override
     public void Input() {
-        Scanner sc = new Scanner(System.in);
+        @SuppressWarnings("resource")
+		Scanner sc = new Scanner(System.in);
         String input;
         super.Input(); 
         System.out.println("Nhap ma sinh vien: ");
@@ -88,19 +90,27 @@ public class Student extends Person{
         return ketqua;
     }
 
+   
+    
+    
   
-    public int compareTo(Student o) {
-        
-        if(this.getGpa() == o.getGpa() && this.getSocial_activity() == o.getSocial_activity())
-            return 0;
-        else if(this.getGpa() > o.getGpa() && this.getSocial_activity() > o.getSocial_activity())
-            return 1;
-        else return -1;
-    }
-
     @Override
+	public int compareTo(Person o) {
+    	if (o instanceof Student) {
+    		Student otherStudent = (Student) o; 
+    		if(this.gpa == otherStudent.gpa && this.social_activity == otherStudent.social_activity) 
+    			return 0;
+    		else if(this.gpa > otherStudent.gpa && this.social_activity > otherStudent.social_activity)
+    			return 1;
+    		else return -1;
+        } else {  
+            return 0;
+        }
+	}
+
+	@Override
     public Object clone() throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return super.clone();
     }
     
     
